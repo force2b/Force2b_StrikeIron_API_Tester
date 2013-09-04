@@ -1,0 +1,98 @@
+<!-- ************************************************************************************
+* Apex Class: StrikeIron_Custom
+* Created: Michael Smith/Force2b LLC, 07/10/2012
+* http://www.force2b.net, mike.smith@force2b.net
+*
+* Purpose(s):
+* - Strike Iron Testing Page
+*
+* Modifications: 
+* 
+***************************************************************************************  --> 
+<apex:page controller="StrikeIron_Custom" title="Strike Iron Tax Rate Testing">
+
+<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+
+<apex:sectionHeader title="StrikeIron Testing" />
+
+<apex:form >
+<apex:pageBlock id="form">
+    <apex:pageBlockButtons location="bottom" id="buttons">
+        <apex:commandButton value=" Lookup " action="{!getRate}" rerender="results" 
+        styleClass="theButton" 
+        onComplete="j$('.theButton').toggleClass( 'btn', true ).toggleClass( 'btnDisabled', false );"/>
+    </apex:pageBlockButtons>
+    <apex:pageBlockSection title="Test Query" collapsible="false">
+	    <apex:pageBlockSectionItem > 
+	        <apex:outputLabel value="US Zip Code" />
+	        <apex:inputText value="{!zipcode}" size="5" maxlength="5" />
+	    </apex:pageBlockSectionItem>
+    </apex:pageBlockSection>
+    
+    <apex:pageBlockSection title="Strikeiron Credentials" collapsible="true">
+	    <apex:pageBlockSectionItem > 
+	        <apex:outputLabel value="Username" />
+	        <apex:inputText value="{!username}" />
+	    </apex:pageBlockSectionItem>
+	    <apex:pageBlockSectionItem > 
+	        <apex:outputLabel value="Password" />
+	        <apex:inputSecret value="{!password}" redisplay="true" />
+	    </apex:pageBlockSectionItem>
+    </apex:pageBlockSection>
+</apex:pageBlock>
+
+<apex:outputPanel id="results">
+<apex:pageBlock >
+    <apex:pageBlockSection title="Query Results" collapsible="false">
+	    <apex:pageBlockSectionItem >
+	        <apex:outputLabel value="City:"/>
+	        <apex:outputText value="{!city}"/>
+	    </apex:pageBlockSectionItem>
+	    <apex:pageBlockSectionItem >
+	        <apex:outputLabel value="State"/>
+	        <apex:outputText value="{!state}"/>
+	    </apex:pageBlockSectionItem>
+	    <apex:pageBlockSectionItem >
+	        <apex:outputLabel value="County"/>
+	        <apex:outputText value="{!county}"/>
+	    </apex:pageBlockSectionItem>
+	    <apex:pageBlockSectionItem >
+	        <apex:outputLabel value="Shipping Taxable"/>
+	        <apex:outputText value="{!shippingTax}"/>
+	    </apex:pageBlockSectionItem>
+	    <apex:pageBlockSectionItem >
+	        <apex:outputLabel value="State tax rate"/>
+	        <apex:outputText value="{!stateTax}"/>
+	    </apex:pageBlockSectionItem>
+	    <apex:pageBlockSectionItem >
+	        <apex:outputLabel value="Combined State tax rate"/>
+	        <apex:outputText value="{!taxrate}"/>
+	    </apex:pageBlockSectionItem>
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1">
+    <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Statistics:"/>
+        <apex:outputText escape="false" value="{!statistics}" style="width:100%" />
+    </apex:pageBlockSectionItem>
+    </apex:pageBlockSection>
+
+</apex:pageBlock>
+</apex:outputPanel>
+
+</apex:form>
+
+<script>
+// ------------------------------------------------------------
+// PAGE LOAD JAVASCRIPT
+// ------------------------------------------------------------
+
+j$ = jQuery.noConflict();
+
+j$(".theButton").click(function(event){
+    var obj = event.target;
+    j$(obj).toggleClass( 'btn', false ).toggleClass( 'btnDisabled', true );
+});
+</script>
+
+</apex:page>
